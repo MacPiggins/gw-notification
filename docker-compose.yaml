@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    container_name: gw-analytics
+    depends_on:
+      - mongo
+      - nats
+    restart: unless-stopped
+    volumes:
+      - ./config.env:/config.env
+
+  mongo:
+    image: mongo:7
+    container_name: gw-analytics-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: testdb
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  nats:
+    image: nats:2-alpine
+    container_name: gw-analytics-nats
+    restart: unless-stopped
+    command: ["-js"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+volumes:
+  mongo_data:
