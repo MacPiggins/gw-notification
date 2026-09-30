@@ -2,6 +2,8 @@
 
 A Go service that consumes wallet transfer events from a NATS JetStream stream and stores them in MongoDB.
 
+> Part of the **GW stack** — see the [general deployment repository](https://github.com/MacPiggins/gw-deploy) for deployment configuration and infrastructure.
+
 ## How it works
 
 1. Connects to NATS and creates or updates a durable consumer for the configured stream.
